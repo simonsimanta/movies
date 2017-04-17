@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+  <head>
+    <meta charset="utf-8">
+    <title>Trailers</title>
+
+    <!-- Bootstrap 3 -->
+    <link href="app/styles/mystyles.css" rel="stylesheet">
+    <link href="app/scripts/myscript.js" type="text/javascript" charset="utf-8">
+    <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <script src="bower_components/angular/angular.min.js"></script>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+        // Pause the video when the modal is closed
+        $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
+            // Remove the src so the player itself gets removed, as this is the only
+            // reliable way to ensure the video stops playing in IE
+            $("#trailer-video-container").empty();
+        });
+        // Start playing the video whenever the trailer modal is opened
+        $(document).on('click', '.movie-tile', function (event) {
+            var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
+            var str = trailerYouTubeId;
+            var n = str.lastIndexOf("/");
+            var res = str.substr(n+1);
+            var sourceUrl = "https://www.youtube.com/embed/"+res ;
+            $("#trailer-video-container").empty().append($("<iframe></iframe>", {
+              'id': 'trailer-video',
+              'type': 'text-html',
+              'src': sourceUrl,
+              'frameborder': 0
+            }));
+        });
+        // Animate in the movies when the page loads
+        
+    </script>
+    
+</head>
+  <body>
+    <!-- Trailer Video Modal -->
+    <div class="modal" id="trailer">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
+            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
+          </a>
+          <div class="scale-media" id="trailer-video-container">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Main Page Content -->
+    <div class="container">
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Películas</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="index.html"><span class="glyphicon glyphicon-home"
+                         aria-hidden="true"></span> Home</a></li>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a data-toggle="modal" data-target="#loginModal">
+                    <span class="glyphicon glyphicon-log-in"></span> ADD Movie Trailers</a>
+                    </li>
+                </ul>
+                </div>
+        </div>
+      </div>
+      <div id="loginModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">ADD Movie Trailers</h4>
+            </div>
+            <div class="modal-body">
+            <form class="form-horizontal">
+                <div class="col-xs-12 form-group">
+                    <label class="sr-only" for="email">Title</label>
+                    <span class="col-xs-3">Title:</span>
+                    <input type="email" class="form-control-input-sm col-xs-9" id="email" >
+                </div>
+                <div class="col-xs-12 form-group">
+                    <label class="sr-only" for="password">storyline</label>
+                    <span class="col-xs-3">storyline:</span>
+                    <input type="Password" class="form-controlinput-sm col-xs-9" id="password" placeholder="text">
+                </div>
+                <div class="col-xs-12 form-group">
+                    <label class="sr-only" for="password">image</label>
+                    <span class="col-xs-3">image URL:</span>
+                    <input type="Password" class="form-controlinput-sm col-xs-9" id="password" placeholder="URL">
+                </div>
+                <div class="col-xs-12 form-group">
+                    <label class="sr-only" for="password">youtube</label>
+                    <span class="col-xs-3">youtube URL:</span>
+                    <input type="Password" class="form-controlinput-sm col-xs-9" id="password" placeholder="video URL">
+                </div>
+                <div class="col-xs-12 form-group">
+                <span class="col-xs-3"></span>    
+                <button type="submit" class="btn btn-info btn-sm col-xs-3">Submit</button>
+                <button type="button" class="btn btn-primary btn-sm col-xs-3"
+                       data-dismiss="modal">Cancel</button>
+                </div>
+                <div >
+                    <label>
+                    Remember me
+                    </label>
+                </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+    <div class="container">
+        <div class="row row-content bg-color" 
+        ng-init="movies=[
+    {
+        title:'Toy Story',
+        storyline:'A story of a boy and his toys that come to life',
+        image:'http://upload.wikimedia.org/wikipedia/en/1/13/Toy_Story.jpg',
+        youtube:'https://youtu.be/KYz2wyBy3kc'
+    },
+    {
+        title:'Avatar',
+        storyline:'A marine on an alien planet',
+        image:'http://upload.wikimedia.org/wikipedia/en/b/b0/Avatar-Teaser-Poster.jpg',
+        youtube:'https://youtu.be/5PSNL1qE6VY'
+    },
+    {
+        title:'Dawn Of The Planet Of The Apes',
+        storyline:'A story about an ape',
+        image:'http://upload.wikimedia.org/wikipedia/en/7/77/Dawn_of_the_Planet_of_the_Apes.jpg',
+        youtube:'https://youtu.be/eq1sTNGDXo0'
+    },
+    {
+        title:'Gone Girl',
+        storyline:'A sad story',
+        image:'http://upload.wikimedia.org/wikipedia/en/0/05/Gone_Girl_Poster.jpg',
+        youtube:'https://youtu.be/Ym3LB0lOJ0o'
+    },
+    {
+        title:'Dark knight rises',
+        storyline:'A story about batman',
+        image:'http://upload.wikimedia.org/wikipedia/en/8/83/Dark_knight_rises_poster.jpg',
+        youtube:'https://youtu.be/g8evyE9TuYk'
+    },
+    {
+        title:'Avenger',
+        storyline:'A story about superheroes',
+        image:'http://upload.wikimedia.org/wikipedia/en/3/37/Captain_America_The_First_Avenger_poster.jpg',
+        youtube:'https://youtu.be/hIR8Ar-Z4hw'
+    },
+    {
+        title:'Dunkirk',
+        storyline:'Dunkirk is an upcoming English-language war film',
+        image:'https://upload.wikimedia.org/wikipedia/en/1/15/Dunkirk_Film_poster.jpg',
+        youtube:'https://youtu.be/F-eMt3SrfFU'
+    },
+    {
+        title:'Forrest Gump',
+        storyline:'While not intelligent, Forrest Gump has accidentally been present at many historic moments, but his true love, Jenny Curran, eludes him.',
+        image:'https://images-na.ssl-images-amazon.com/images/M/MV5BYThjM2MwZGMtMzg3Ny00NGRkLWE4M2EtYTBiNWMzOTY0YTI4XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_QL50_SY1000_CR0,0,757,1000_AL_.jpg',
+        youtube:'https://youtu.be/uPIEn0M8su0'
+    },
+    {
+        title:'The Shawshank Redemption',
+        storyline:'Two imprisoned men bond over a number of years, finding solace redemption.',
+        image:'https://images-na.ssl-images-amazon.com/images/M/MV5BODU4MjU4NjIwNl5BMl5BanBnXkFtZTgwMDU2MjEyMDE@._V1_QL50_SY1000_CR0,0,672,1000_AL_.jpg',
+        youtube:'https://youtu.be/6hB3S9bIaco'
+    },
+    {
+        title:'The Godfather',
+        storyline:'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.',
+        image:'https://images-na.ssl-images-amazon.com/images/M/MV5BZTRmNjQ1ZDYtNDgzMy00OGE0LWE4N2YtNTkzNWQ5ZDhlNGJmL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_QL50_SY1000_CR0,0,704,1000_AL_.jpg',
+        youtube:'https://youtu.be/sY1S34973zA'
+    },
+    {
+        title:'The Pianist',
+        storyline:'A Polish Jewish musician struggles to survive the destruction of the Warsaw ghetto of World War II.',
+        image:'https://images-na.ssl-images-amazon.com/images/M/MV5BOWRiZDIxZjktMTA1NC00MDQ2LWEzMjUtMTliZmY3NjQ3ODJiXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_QL50_SY1000_CR0,0,724,1000_AL_.jpg',
+        youtube:'https://youtu.be/BFwGqLa_oAo'
+    },
+    {
+        title:'Schindler\'s List',
+        storyline:'In German-occupied Poland during World War II, Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazi Germans.',
+        image:'https://images-na.ssl-images-amazon.com/images/M/MV5BNDE4OTMxMTctNmRhYy00NWE2LTg3YzItYTk3M2UwOTU5Njg4XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_QL50_SY1000_CR0,0,666,1000_AL_.jpg',
+        youtube:'https://youtu.be/M5FpB6qDGAE'
+    }
+]">
+        <ul type="none" class="ubg-color">
+        <li ng-repeat="movie in movies" type="none"> 
+            <div class="col-md-4 media">
+            <div class="media-left media-middle">
+               <img class="movie-tile" src={{movie.image}} width="220" height="342" data-trailer-youtube-id={{movie.youtube}} data-toggle="modal" data-target="#trailer">
+            </div>
+            <div class="media-body" >
+            <h2 class="media-heading">{{movie.title}}</h2>
+            <p>{{movie.storyline}}</p>
+          </div>
+          </div>
+        </li>
+        </ul>
+    </div>
+    </div>
+
+    <footer class="row-footer">
+        <div class="container">
+            <div class="row">             
+                <div class="col-xs-6 col-sm-3">
+                    <h5>Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Menu</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-6 col-sm-3">
+                    <h5>Info :</h5>
+                    <address>
+                      Simon Simanta Sarkar<br>
+                      Carrer d'Aristides Maillol,<br>
+                      Barcelona, Spain<br>
+                      <i class="fa fa-phone"></i>: +917278055903<br>
+                  <i class="fa fa-fax"></i>: +852 8765 4321<br>
+                  <i class="fa fa-envelope"></i>: 
+                  <a href="#">simonsimanta@gmail.com</a>
+                   </address>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                 <div class="nav navbar-nav" style="padding: 40px 10px;">
+                        <a class="btn btn-social-icon btn-google-plus" href="http://google.com/+"><i class="fa fa-google-plus"></i></a>
+                        <a class="btn btn-social-icon btn-facebook" href="http://www.facebook.com/profile.php?id="><i class="fa fa-facebook"></i></a>
+                        <a class="btn btn-social-icon btn-linkedin" href="http://www.linkedin.com/in/"><i class="fa fa-linkedin"></i></a>
+                        <a class="btn btn-social-icon btn-twitter" href="http://twitter.com/"><i class="fa fa-twitter"></i></a>
+                        <a class="btn btn-social-icon btn-youtube" href="http://youtube.com/"><i class="fa fa-youtube"></i></a>
+                        <a class="btn btn-social-icon" href="mailto:"><i class="fa fa-envelope-o"></i></a>
+                    </div>   
+                </div>
+                <div class="col-xs-12">
+                    <p style="padding:10px;"></p>
+                    <p align=center>© Copyright 2017 Simon Simanta</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+  </body>
+</html>
